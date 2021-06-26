@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_user/Home.dart';
@@ -88,6 +89,38 @@ class _LoginPageState extends State<LoginPage> {
 
               },
               child: Text('Forget password? reset'),
+            ),
+            const SizedBox( height: 20, ),
+            // Social Media Auth Buttons
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    //google login
+                    AuthClass().signInWithGoogle().then((UserCredential value ){
+                      final displayName = value.user.displayName;
+                      print(displayName);
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage()), (route) =>false );
+                    });
+                  },
+                  child: Container(
+                    color: Colors.yellow,
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Google"),
+                  ),
+                ),
+                const SizedBox(height: 10,),
+                GestureDetector(
+                  onTap: (){
+
+                  },
+                  child: Container(
+                    color: Colors.blue.shade900,
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Facebook",style: TextStyle(color: Colors.white,fontStyle: FontStyle.normal),),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
