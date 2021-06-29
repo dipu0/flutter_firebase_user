@@ -11,7 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String name= FirebaseAuth.instance.currentUser.displayName;
   String email= FirebaseAuth.instance.currentUser.email;
+  String photoURL= FirebaseAuth.instance.currentUser.photoURL;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,25 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Center(
-        child: Text("Email $email"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.all(20),
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: NetworkImage(photoURL),
+                      fit: BoxFit.fill
+                  ),
+                ),
+            ),
+            Text("Name: $name\n"+"Email $email\n"),
+          ],
+        ),
       ),
     );
   }
